@@ -5,17 +5,19 @@ import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js"
 
 const ThreejsSphere = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    // const width = window.innerWidth;
+    // const height = window.innerHeight;
 
-
+    console.log(mountRef.current);
+    console.log(width);
     const camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 10);
     camera.position.z = 1;
 
     const scene = new THREE.Scene();
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    //renderer.setSize(width, height);
+    // renderer.setSize(width, height);
 
     if (mountRef.current) {
       const { clientWidth, clientHeight } = mountRef.current;
@@ -90,7 +92,6 @@ const ThreejsSphere = () => {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
 
-    console.log(renderer.domElement);
     window.addEventListener("resize", onResize);
 
     ////////////////////////////////////////////////////////////
