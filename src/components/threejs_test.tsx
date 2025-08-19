@@ -10,10 +10,6 @@ const ThreejsSphere = () => {
     // const width = window.innerWidth;
     // const height = window.innerHeight;
 
-    console.log(mountRef.current);
-    console.log(width);
-    const camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 10);
-    camera.position.z = 1;
 
     const scene = new THREE.Scene();
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -22,6 +18,9 @@ const ThreejsSphere = () => {
     if (mountRef.current) {
       const { clientWidth, clientHeight } = mountRef.current;
       renderer.setSize(clientWidth, clientHeight);
+      const camera = new THREE.PerspectiveCamera(70, clientWidth / clientHeight, 0.01, 10);
+      camera.position.z = 1;
+      const controls = new OrbitControls(camera, renderer.domElement)
     }
 
     if (mountRef.current) {
@@ -29,7 +28,6 @@ const ThreejsSphere = () => {
       mountRef.current.appendChild(renderer.domElement)
     }
 
-    const controls = new OrbitControls(camera, renderer.domElement)
 
     ////////////////////////////////////////////////////////////
     // Create geometry
