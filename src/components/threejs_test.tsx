@@ -15,19 +15,20 @@ const ThreejsSphere = () => {
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     // renderer.setSize(width, height);
 
+    let camera = new THREE.PerspectiveCamera(70, window.innerWidth/ window.innerHeight, .01, 10);
+    let controls = new OrbitControls(camera, renderer.domElement);
+
     if (mountRef.current) {
       const { clientWidth, clientHeight } = mountRef.current;
       renderer.setSize(clientWidth, clientHeight);
-      const camera = new THREE.PerspectiveCamera(70, clientWidth / clientHeight, 0.01, 10);
+      camera.aspect = clientWidth/ clientHeight;
       camera.position.z = 1;
-      const controls = new OrbitControls(camera, renderer.domElement)
     }
 
     if (mountRef.current) {
       mountRef.current.innerHTML = "";
       mountRef.current.appendChild(renderer.domElement)
     }
-
 
     ////////////////////////////////////////////////////////////
     // Create geometry
@@ -71,9 +72,9 @@ const ThreejsSphere = () => {
     // Animation
     ////////////////////////////////////////////////////////////
 
-    function animate(time) {
-      renderer.render(scene, camera);
-      controls.update();
+    function animate(time: number) {
+        renderer.render(scene, camera);
+        controls.update();
     }
     renderer.setAnimationLoop(animate);
 
@@ -84,8 +85,8 @@ const ThreejsSphere = () => {
     const onResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
