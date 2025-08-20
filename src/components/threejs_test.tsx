@@ -15,13 +15,13 @@ const ThreejsSphere = () => {
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     // renderer.setSize(width, height);
 
-    let camera = new THREE.PerspectiveCamera(70, window.innerWidth/ window.innerHeight, .01, 10);
+    let camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, .01, 10);
     let controls = new OrbitControls(camera, renderer.domElement);
 
     if (mountRef.current) {
       const { clientWidth, clientHeight } = mountRef.current;
       renderer.setSize(clientWidth, clientHeight);
-      camera.aspect = clientWidth/ clientHeight;
+      camera.aspect = clientWidth / clientHeight;
       camera.position.z = 1;
     }
 
@@ -73,8 +73,8 @@ const ThreejsSphere = () => {
     ////////////////////////////////////////////////////////////
 
     function animate(time: number) {
-        renderer.render(scene, camera);
-        controls.update();
+      renderer.render(scene, camera);
+      controls.update();
     }
     renderer.setAnimationLoop(animate);
 
@@ -83,11 +83,11 @@ const ThreejsSphere = () => {
     ////////////////////////////////////////////////////////////
 
     const onResize = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
+      if (!mountRef.current) return;
+      const { clientWidth, clientHeight } = mountRef.current;
+      camera.aspect = clientWidth / clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(clientWidth, clientHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
 
@@ -98,7 +98,7 @@ const ThreejsSphere = () => {
     ////////////////////////////////////////////////////////////
 
     return () => {
-      // window.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", onResize);
       renderer.dispose();
       mountRef.current?.removeChild(renderer.domElement);
     }
