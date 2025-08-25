@@ -23,6 +23,7 @@ const ThreejsSphere = () => {
       renderer.setSize(clientWidth, clientHeight);
       camera.aspect = clientWidth / clientHeight;
       camera.position.z = 1;
+      camera.updateProjectionMatrix();
     }
 
     if (mountRef.current) {
